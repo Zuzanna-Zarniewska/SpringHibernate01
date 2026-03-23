@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 import pl.coderslab.entity.Author;
 
+import java.util.List;
+
 @Repository
 @Transactional
 public class AuthorDao {
@@ -27,5 +29,10 @@ public class AuthorDao {
     public void deleteById(Long id) {
         Author toDelete = getById(id);
         entityManager.remove(entityManager.contains(toDelete) ? toDelete : entityManager.merge(toDelete));
+    }
+
+    public List<Author> findAll() {
+        return entityManager.createQuery("select a from Author a", Author.class)
+                .getResultList();
     }
 }
