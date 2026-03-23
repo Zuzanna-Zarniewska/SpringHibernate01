@@ -13,6 +13,7 @@ import pl.coderslab.entity.Author;
 import pl.coderslab.entity.Book;
 import pl.coderslab.entity.Publisher;
 import pl.coderslab.repository.CategoryRepository;
+import pl.coderslab.repository.PublisherRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,13 +29,15 @@ public class BookController {
     private final AuthorDao authorDao;
     private final BookRepository bookRepository;
     private final CategoryRepository categoryRepository;
+    private final PublisherRepository publisherRepository;
 
-    public BookController(BookDao bookDao, PublisherDao publisherDao, AuthorDao authorDao, BookRepository bookRepository, CategoryRepository categoryRepository) {
+    public BookController(BookDao bookDao, PublisherDao publisherDao, AuthorDao authorDao, BookRepository bookRepository, CategoryRepository categoryRepository, PublisherRepository publisherRepository) {
         this.bookDao = bookDao;
         this.publisherDao = publisherDao;
         this.authorDao = authorDao;
         this.bookRepository = bookRepository;
         this.categoryRepository = categoryRepository;
+        this.publisherRepository = publisherRepository;
     }
 
     @GetMapping("/repo/by-cat/{id}")

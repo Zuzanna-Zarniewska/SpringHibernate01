@@ -8,14 +8,29 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import pl.coderslab.app.PublisherDao;
 import pl.coderslab.entity.Book;
 import pl.coderslab.entity.Publisher;
+import pl.coderslab.repository.PublisherRepository;
 
 @Controller
 @RequestMapping("/publisher")
 public class PublisherController {
     private PublisherDao dao;
+    private final PublisherRepository publisherRepository;
 
-    public PublisherController(PublisherDao dao) {
+    public PublisherController(PublisherDao dao, PublisherRepository publisherRepository) {
         this.dao = dao;
+        this.publisherRepository = publisherRepository;
+    }
+
+    @GetMapping("/by-nip/{nip}")
+    @ResponseBody
+    public String publisherByNip(@PathVariable("nip") String nip) {
+        return publisherRepository.findFirstByNip(nip).toString();
+    }
+
+    @GetMapping("/by-regon/{regon}")
+    @ResponseBody
+    public String publisherByRegon(@PathVariable("regon") String regon) {
+        return publisherRepository.findFirstByRegon(regon).toString();
     }
 
     @GetMapping("/save/{name}")
