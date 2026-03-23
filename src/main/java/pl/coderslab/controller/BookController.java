@@ -97,6 +97,15 @@ public class BookController {
                 .collect(Collectors.joining("<br><br>"));
     }
 
+    @GetMapping("/find-by-author/{id}")
+    @ResponseBody
+    public String findBooksByAuthor(@PathVariable("id") Long id) {
+        Author author = authorDao.getById(id);
+        return bookDao.findBooksByAuthor(author).stream()
+                .map(Book::toString)
+                .collect(Collectors.joining("<br><br>"));
+    }
+
     @GetMapping("/save/{title}/{rating}/{description}")
     @ResponseBody
     public String saveBook(@PathVariable("title") String title, @PathVariable("rating") int rating,
