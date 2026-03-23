@@ -23,6 +23,18 @@ public class Book {
     @JoinTable(name = "books_authors")
     private Set<Author> authors = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public Set<Author> getAuthors() {
         return authors;
     }

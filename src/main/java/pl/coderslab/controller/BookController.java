@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.coderslab.app.AuthorDao;
 import pl.coderslab.app.BookDao;
+import pl.coderslab.repository.BookRepository;
 import pl.coderslab.app.PublisherDao;
 import pl.coderslab.entity.Author;
 import pl.coderslab.entity.Book;
@@ -22,11 +23,29 @@ public class BookController {
     private final BookDao bookDao;
     private final PublisherDao publisherDao;
     private final AuthorDao authorDao;
+    private final BookRepository bookRepository;
 
-    public BookController(BookDao bookDao, PublisherDao publisherDao, AuthorDao authorDao) {
+    public BookController(BookDao bookDao, PublisherDao publisherDao, AuthorDao authorDao, BookRepository bookRepository) {
         this.bookDao = bookDao;
         this.publisherDao = publisherDao;
         this.authorDao = authorDao;
+        this.bookRepository = bookRepository;
+    }
+
+    @GetMapping("/test-repo/{rating}")
+    @ResponseBody
+    public String test(@PathVariable("rating") int rating) {
+        return bookRepository.findAllByRating(rating).stream()
+                .map(Book::toString)
+                .collect(Collectors.joining("<br><br>"));
+    }
+
+    @GetMapping("/test-repo-1")
+    @ResponseBody
+    public String test() {
+        return bookRepository.findAllByCategoryId(2L)
+                .stream().map(Book::getTitle)
+                .collect(Collectors.joining(", "));
     }
 
     @GetMapping("/add-with-publisher")

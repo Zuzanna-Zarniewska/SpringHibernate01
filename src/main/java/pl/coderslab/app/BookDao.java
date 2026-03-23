@@ -65,4 +65,6 @@ public class BookDao {
                 .setParameter("author", author)
                 .getResultList();
     }
+
+    // ^ do tego typu metod lepiej jest przyjmować obiekt odpowiedniej klasy jako parametr
 }
