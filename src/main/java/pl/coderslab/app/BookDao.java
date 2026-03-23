@@ -46,4 +46,9 @@ public class BookDao {
                 .setParameter("rating", rating)
                 .getResultList();
     }
+
+    public List<Book> findBooksWithPublisher() {
+        return entityManager.createQuery("select b from Book b where b.publisher is not null", Book.class)
+                .getResultList();
+    }
 }

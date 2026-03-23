@@ -81,6 +81,14 @@ public class BookController {
                 .collect(Collectors.joining("<br><br>"));
     }
 
+    @GetMapping("/books-with-publisher")
+    @ResponseBody
+    public String findBooksWithPublisher() {
+        return bookDao.findBooksWithPublisher().stream()
+                .map(Book::toString)
+                .collect(Collectors.joining("<br><br>"));
+    }
+
     @GetMapping("/save/{title}/{rating}/{description}")
     @ResponseBody
     public String saveBook(@PathVariable("title") String title, @PathVariable("rating") int rating,
