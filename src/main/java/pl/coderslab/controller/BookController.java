@@ -12,9 +12,12 @@ import pl.coderslab.app.PublisherDao;
 import pl.coderslab.entity.Author;
 import pl.coderslab.entity.Book;
 import pl.coderslab.entity.Publisher;
+import pl.coderslab.repository.CategoryRepository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -24,28 +27,64 @@ public class BookController {
     private final PublisherDao publisherDao;
     private final AuthorDao authorDao;
     private final BookRepository bookRepository;
+    private final CategoryRepository categoryRepository;
 
-    public BookController(BookDao bookDao, PublisherDao publisherDao, AuthorDao authorDao, BookRepository bookRepository) {
+    public BookController(BookDao bookDao, PublisherDao publisherDao, AuthorDao authorDao, BookRepository bookRepository, CategoryRepository categoryRepository) {
         this.bookDao = bookDao;
         this.publisherDao = publisherDao;
         this.authorDao = authorDao;
         this.bookRepository = bookRepository;
+        this.categoryRepository = categoryRepository;
     }
 
-    @GetMapping("/test-repo/{rating}")
+    @GetMapping("/repo/by-cat/{id}")
     @ResponseBody
-    public String test(@PathVariable("rating") int rating) {
+    public String bookByCatId(@PathVariable("id") Long id) {
+        return bookRepository.findAllByCategoryId(id)
+                .stream().map(Book::getTitle)
+                .collect(Collectors.joining("<br><br>"));
+    }
+
+    @GetMapping("/repo/by-cat")
+    @ResponseBody
+    public String bookByCat() {
+        // dla kategorii o ID = 1
+        return bookRepository.findAllByCategory(categoryRepository.findById(1L).get())
+                .stream().map(Book::getTitle)
+                .collect(Collectors.joining("<br><br>"));
+    }
+
+    @GetMapping("/repo/by-author/{id}")
+    @ResponseBody
+    public String booksByAuthor(@PathVariable("id") Long id) {
+        Author author = authorDao.getById(id);
+        return bookRepository.findAllByAuthorsContains(author).stream()
+                .map(Book::toString)
+                .collect(Collectors.joining("<br><br>"));
+    }
+
+    @GetMapping("/repo/by-publisher/{id}")
+    @ResponseBody
+    public String booksByPublisher(@PathVariable("id") Long id) {
+        Publisher publisher = publisherDao.getById(id);
+        return bookRepository.findAllByPublisher(publisher).stream()
+                .map(Book::toString)
+                .collect(Collectors.joining("<br><br>"));
+    }
+
+    @GetMapping("/repo/by-rating/{rating}")
+    @ResponseBody
+    public String booksByPublisher(@PathVariable("rating") int rating) {
         return bookRepository.findAllByRating(rating).stream()
                 .map(Book::toString)
                 .collect(Collectors.joining("<br><br>"));
     }
 
-    @GetMapping("/test-repo-1")
+    @GetMapping("/repo/by-cat/first-ordered-by-title")
     @ResponseBody
-    public String test() {
-        return bookRepository.findAllByCategoryId(2L)
-                .stream().map(Book::getTitle)
-                .collect(Collectors.joining(", "));
+    public String firstBookByCatOrderedByTitle() {
+        // dla kategorii o ID = 1
+        return bookRepository.findFirstByCategoryOrderByTitle(categoryRepository.findById(1L).get()).toString();
     }
 
     @GetMapping("/add-with-publisher")
@@ -86,7 +125,7 @@ public class BookController {
         book.setTitle("Ksiazka Dwoch Autorow");
         book.setRating(5);
         book.setDescription("Opis");
-        book.setAuthors(new HashSet<>(Arrays.asList(author1, author2)));
+        book.setAuthors(new ArrayList<>(Arrays.asList(author1, author2)));
         bookDao.save(book);
 
         return "Added the book with ID: " + book.getId();
