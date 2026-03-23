@@ -3,20 +3,47 @@ package pl.coderslab.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.coderslab.app.AuthorDao;
 import pl.coderslab.entity.Author;
 import pl.coderslab.entity.Book;
+import pl.coderslab.repository.AuthorRepository;
+
+import java.util.stream.Collectors;
 
 @Controller
+@RequestMapping("/author")
 public class AuthorController {
     private AuthorDao dao;
+    private final AuthorRepository authorRepository;
 
-    public AuthorController(AuthorDao dao) {
+    public AuthorController(AuthorDao dao, AuthorRepository authorRepository) {
         this.dao = dao;
+        this.authorRepository = authorRepository;
     }
 
-    @GetMapping("/author/save/{firstName}/{lastName}")
+    @GetMapping("/by-mail/{email}")
+    @ResponseBody
+    public String authorByEmail(@PathVariable("email") String email) {
+        return authorRepository.findFirstByEmail(email).toString();
+    }
+
+    @GetMapping("/by-pesel/{pesel}")
+    @ResponseBody
+    public String authorByPesel(@PathVariable("pesel") String pesel) {
+        return  authorRepository.findFirstByPesel(pesel).toString();
+    }
+
+    @GetMapping("/by-lastname/{lastName}")
+    @ResponseBody
+    public String authorByLastName(@PathVariable("lastName") String lastName) {
+        return authorRepository.findAllByLastName(lastName)
+                .stream().map(Author::toString)
+                .collect(Collectors.joining("<br><br>"));
+    }
+
+    @GetMapping("/save/{firstName}/{lastName}")
     @ResponseBody
     public String saveAuthor(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName) {
         Author author = new Author();
@@ -27,7 +54,7 @@ public class AuthorController {
         return "Saved the author with id: " + author.getId();
     }
 
-    @GetMapping("/author/edit/{id}/{firstName}/{lastName}")
+    @GetMapping("/edit/{id}/{firstName}/{lastName}")
     @ResponseBody
     public String editAuthor(@PathVariable("id") Long id, @PathVariable("firstName") String firstName,
                            @PathVariable("lastName") String lastName) {
@@ -38,14 +65,14 @@ public class AuthorController {
         return "Edited the author with id: " + author.getId();
     }
 
-    @GetMapping("/author/find/{id}")
+    @GetMapping("/find/{id}")
     @ResponseBody
     public String findAuthor(@PathVariable("id") Long id) {
         Author author = dao.getById(id);
         return author.toString();
     }
 
-    @GetMapping("/author/delete/{id}")
+    @GetMapping("/delete/{id}")
     @ResponseBody
     public String deleteAuthor(@PathVariable("id") Long id) {
         dao.deleteById(id);
