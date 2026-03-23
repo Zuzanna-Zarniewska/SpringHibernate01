@@ -6,6 +6,7 @@ import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 import pl.coderslab.entity.Book;
+import pl.coderslab.entity.Publisher;
 
 import java.util.List;
 
@@ -49,6 +50,12 @@ public class BookDao {
 
     public List<Book> findBooksWithPublisher() {
         return entityManager.createQuery("select b from Book b where b.publisher is not null", Book.class)
+                .getResultList();
+    }
+
+    public List<Book> findBooksByPublisher(String publisherName) {
+        return entityManager.createQuery("select b from Book b where b.publisher.name =: publisherName")
+                .setParameter("publisherName", publisherName)
                 .getResultList();
     }
 }
