@@ -14,6 +14,7 @@ import pl.coderslab.entity.Publisher;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/book")
@@ -70,6 +71,14 @@ public class BookController {
         bookDao.save(book);
 
         return "Added the book with ID: " + book.getId();
+    }
+
+    @GetMapping("/find-by-rating/{rating}")
+    @ResponseBody
+    public String findBookByRating(@PathVariable("rating") Integer rating) {
+        return bookDao.findAllByRating(rating)
+                .stream().map(Book::toString)
+                .collect(Collectors.joining("<br><br>"));
     }
 
     @GetMapping("/save/{title}/{rating}/{description}")
