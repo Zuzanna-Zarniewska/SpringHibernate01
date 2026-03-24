@@ -12,13 +12,12 @@ Content-Type: application/json
   "regon": "777777777"
 }
 ###
-DELETE http://localhost:8080/api/publishers/7
+DELETE http://localhost:8080/api/publishers/10
 ###
-PUT http://localhost:8080/api/publishers/8
+PUT http://localhost:8080/api/publishers/9
 Content-Type: application/json
 
 {
-  "id": 8,
   "name": "editedPublisher",
   "nip": "0000000000",
   "regon": "000000000"
