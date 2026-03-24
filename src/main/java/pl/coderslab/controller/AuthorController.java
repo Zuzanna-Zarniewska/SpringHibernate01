@@ -23,6 +23,19 @@ public class AuthorController {
         this.authorRepository = authorRepository;
     }
 
+    @GetMapping("/test/{begining}")
+    @ResponseBody
+    public String test(@PathVariable("begining") String begining) {
+//        String begining = "mail";
+//        return authorRepository.findAllByEmailBeginingQuery(begining).stream()
+//                .map(Author::toString)
+//                .collect(Collectors.joining("<br><br>"));
+//        String begining = "10";
+        return authorRepository.findAllByPeselBeginingQuery(begining).stream()
+                .map(Author::toString)
+                .collect(Collectors.joining("<br><br>"));
+    }
+
     @GetMapping("/by-mail/{email}")
     @ResponseBody
     public String authorByEmail(@PathVariable("email") String email) {
