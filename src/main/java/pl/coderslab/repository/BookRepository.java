@@ -37,6 +37,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Query("select b from Book b where b.publisher = ?1")
     List<Book> findBooksByPublisherQuery(Publisher publisher);
 
-    @Query("select b from Book b where b.category = ?1 order by b.title limit 1")
-    Book findFirstByCategoryOrderedByTitleQuery(Category category);
+    @Query("select b from Book b where b.category = ?1 order by b.title asc limit 1")
+    List<Book> findFirstByCategoryOrderedByTitleQuery(Category category);
 }

@@ -49,7 +49,9 @@ public class BookController {
 //                .map(Book::toString)
 //                .collect(Collectors.joining("<br><br>"));
         Category category = categoryRepository.getById(1L);
-        return bookRepository.findFirstByCategoryOrderedByTitleQuery(category).toString();
+        return bookRepository.findFirstByCategoryOrderedByTitleQuery(category).stream()
+                .map(Book::toString)
+                .collect(Collectors.joining("<br><br>"));
     }
 
     @GetMapping("/repo/by-cat/{id}")
