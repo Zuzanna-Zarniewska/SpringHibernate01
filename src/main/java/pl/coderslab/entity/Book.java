@@ -28,6 +28,10 @@ public class Book {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @OneToMany
+    @JoinColumn(name = "comments")
+    private List<Comment> comments;
+
     public Category getCategory() {
         return category;
     }
