@@ -1,0 +1,25 @@
+### GET request to example server
+GET http://localhost:8080/api/publishers/
+###
+GET http://localhost:8080/api/publishers/6
+###
+POST http://localhost:8080/api/publishers/
+Content-Type: application/json
+
+{
+  "name": "newPublisher",
+  "nip": "7777777777",
+  "regon": "777777777"
+}
+###
+DELETE http://localhost:8080/api/publishers/7
+###
+PUT http://localhost:8080/api/publishers/8
+Content-Type: application/json
+
+{
+  "id": 8,
+  "name": "editedPublisher",
+  "nip": "0000000000",
+  "regon": "000000000"
+}

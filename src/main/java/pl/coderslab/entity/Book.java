@@ -1,5 +1,6 @@
 package pl.coderslab.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class Book {
     private Publisher publisher;
 
     @ManyToMany
+    @JsonIgnore
     @JoinTable(name = "books_authors")
     private List<Author> authors = new ArrayList<>();
 
