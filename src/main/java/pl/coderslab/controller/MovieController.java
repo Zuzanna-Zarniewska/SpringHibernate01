@@ -8,20 +8,21 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.coderslab.dto.MovieDTO;
 import pl.coderslab.repository.MovieRepository;
 import pl.coderslab.mapper.MovieMapper;
+import pl.coderslab.services.MovieService;
 
 @RestController
 @RequestMapping("/api/movies")
 public class MovieController {
-    private final MovieRepository movieRepository;
+    private final MovieService movieService;
 
-    public MovieController(MovieRepository movieRepository) {
-        this.movieRepository = movieRepository;
+    public MovieController(MovieService movieService) {
+        this.movieService = movieService;
     }
 
     @GetMapping("/{id}")
     @Transactional
     public MovieDTO getById(@PathVariable("id") Long id) {
-        return MovieMapper.toDTO(movieRepository.findById(id).get());
+        return movieService.findById(id);
     }
 
 //    private static @NonNull MovieDTO toDTO(Movie movie) {
