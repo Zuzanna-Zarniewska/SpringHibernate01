@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.coderslab.dto.MovieDTO;
 import pl.coderslab.repository.MovieRepository;
-import pl.coderslab.services.MovieMapper;
+import pl.coderslab.mapper.MovieMapper;
 
 @RestController
 @RequestMapping("/api/movies")

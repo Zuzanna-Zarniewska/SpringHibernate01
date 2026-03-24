@@ -1,4 +1,4 @@
-package pl.coderslab.services;
+package pl.coderslab.mapper;
 
 import lombok.NonNull;
 import pl.coderslab.dto.MovieDTO;
