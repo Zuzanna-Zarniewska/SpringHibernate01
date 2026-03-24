@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.coderslab.app.AuthorDao;
 import pl.coderslab.app.BookDao;
+import pl.coderslab.entity.Category;
 import pl.coderslab.repository.BookRepository;
 import pl.coderslab.app.PublisherDao;
 import pl.coderslab.entity.Author;
@@ -38,6 +39,17 @@ public class BookController {
         this.bookRepository = bookRepository;
         this.categoryRepository = categoryRepository;
         this.publisherRepository = publisherRepository;
+    }
+
+    @GetMapping("/test")
+    @ResponseBody
+    public String test() {
+//        Publisher publisher = publisherRepository.getById(6L);
+//        return bookRepository.findBooksByPublisherQuery(publisher).stream()
+//                .map(Book::toString)
+//                .collect(Collectors.joining("<br><br>"));
+        Category category = categoryRepository.getById(1L);
+        return bookRepository.findFirstByCategoryOrderedByTitleQuery(category).toString();
     }
 
     @GetMapping("/repo/by-cat/{id}")
