@@ -6,21 +6,22 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.coderslab.dto.StudentDTO;
 import pl.coderslab.entity.Student;
 import pl.coderslab.repository.StudentRepository;
+import pl.coderslab.services.StudentService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/students")
 public class StudentController {
-    private final StudentRepository studentRepository;
+    private final StudentService studentService;
 
-    public StudentController(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
     }
 
     @GetMapping
     public List<StudentDTO> getAllStudents() {
-        return studentRepository.findAll().stream()
+        return studentService.findAll().stream()
                 .map(student -> {
                     StudentDTO studentDTO = new StudentDTO();
                     studentDTO.setId(student.getId());
