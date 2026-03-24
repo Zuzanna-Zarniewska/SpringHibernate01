@@ -1,0 +1,26 @@
+### GET request to example server
+GET http://localhost:8080/api/authors/
+###
+GET http://localhost:8080/api/authors/11
+###
+POST http://localhost:8080/api/authors/
+Content-Type: application/json
+
+{
+  "firstName": "first",
+  "lastName": "last",
+  "email": "mailll@mail.com",
+  "pesel": "99999999999"
+}
+###
+DELETE http://localhost:8080/api/authors/12
+###
+PUT http://localhost:8080/api/authors/12
+Content-Type: application/json
+
+{
+  "firstName": "firstE",
+  "lastName": "lastE",
+  "email": "mailllE@mail.com",
+  "pesel": "99999999899"
+}
