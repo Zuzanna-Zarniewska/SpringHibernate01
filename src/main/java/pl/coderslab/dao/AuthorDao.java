@@ -1,4 +1,4 @@
-package pl.coderslab.app;
+package pl.coderslab.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

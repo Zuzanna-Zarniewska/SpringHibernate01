@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import pl.coderslab.app.PersonDao;
-import pl.coderslab.app.PersonDetailsDao;
+import pl.coderslab.dao.PersonDao;
+import pl.coderslab.dao.PersonDetailsDao;
 import pl.coderslab.entity.Person;
 import pl.coderslab.entity.PersonDetails;
 

@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import pl.coderslab.app.AuthorDao;
-import pl.coderslab.app.BookDao;
+import pl.coderslab.dao.AuthorDao;
+import pl.coderslab.dao.BookDao;
 import pl.coderslab.entity.Category;
 import pl.coderslab.repository.BookRepository;
-import pl.coderslab.app.PublisherDao;
+import pl.coderslab.dao.PublisherDao;
 import pl.coderslab.entity.Author;
 import pl.coderslab.entity.Book;
 import pl.coderslab.entity.Publisher;
@@ -18,8 +18,6 @@ import pl.coderslab.repository.PublisherRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller

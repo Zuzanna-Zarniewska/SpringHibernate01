@@ -5,9 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import pl.coderslab.app.AuthorDao;
+import pl.coderslab.dao.AuthorDao;
 import pl.coderslab.entity.Author;
-import pl.coderslab.entity.Book;
 import pl.coderslab.repository.AuthorRepository;
 
 import java.util.stream.Collectors;
