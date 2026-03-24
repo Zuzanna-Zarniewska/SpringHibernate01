@@ -7,7 +7,7 @@ import pl.coderslab.entity.Movie;
 
 import java.util.List;
 
-public class MovieService {
+public class MovieMapper {
     public static @NonNull MovieDTO toDTO(Movie movie) {
         MovieDTO movieDTO = new MovieDTO();
         movieDTO.setId(movie.getId());

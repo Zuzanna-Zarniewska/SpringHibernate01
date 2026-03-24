@@ -1,19 +1,13 @@
 package pl.coderslab.controller;
 
 import jakarta.transaction.Transactional;
-import lombok.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.coderslab.dto.MovieDTO;
-import pl.coderslab.entity.Genre;
-import pl.coderslab.entity.Movie;
 import pl.coderslab.repository.MovieRepository;
-import pl.coderslab.services.MovieService;
-
-import java.util.List;
-import java.util.function.Consumer;
+import pl.coderslab.services.MovieMapper;
 
 @RestController
 @RequestMapping("/api/movies")
@@ -27,7 +21,7 @@ public class MovieController {
     @GetMapping("/{id}")
     @Transactional
     public MovieDTO getById(@PathVariable("id") Long id) {
-        return MovieService.toDTO(movieRepository.findById(id).get());
+        return MovieMapper.toDTO(movieRepository.findById(id).get());
     }
 
 //    private static @NonNull MovieDTO toDTO(Movie movie) {
