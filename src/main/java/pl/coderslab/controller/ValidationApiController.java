@@ -6,6 +6,7 @@ import jakarta.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.coderslab.entity.Author;
 import pl.coderslab.entity.Book;
 
 import java.util.Set;
@@ -29,5 +30,18 @@ public class ValidationApiController {
         return violations.stream()
                 .map(cv -> cv.getPropertyPath().toString().concat(" : ").concat(cv.getMessage()))
                 .collect(Collectors.joining("<br><br>"));
+    }
+
+    @GetMapping("/author")
+    public String validateAuthor() {
+        Author author = new Author();
+        Set<ConstraintViolation<Author>> violations = validator.validate(author);
+
+        if (!violations.isEmpty()) {
+            return violations.stream()
+                    .map(v -> v.getPropertyPath().toString().concat(" : ").concat(v.getMessage()))
+                    .collect(Collectors.joining("<br><br>"));
+        }
+        return "Author validation complete";
     }
 }
