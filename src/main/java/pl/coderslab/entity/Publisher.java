@@ -1,6 +1,9 @@
 package pl.coderslab.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.pl.NIP;
+import org.hibernate.validator.constraints.pl.REGON;
 
 @Entity
 @Table(name = "publishers")
@@ -8,8 +11,14 @@ public class Publisher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank
     private String name;
+
+    @NIP
     private String nip;
+
+    @REGON
     private String regon;
 
     public Long getId() {

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.coderslab.entity.Author;
 import pl.coderslab.entity.Book;
+import pl.coderslab.entity.Publisher;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -35,6 +36,8 @@ public class ValidationApiController {
     @GetMapping("/author")
     public String validateAuthor() {
         Author author = new Author();
+        author.setPesel("123");
+        author.setEmail("ciasteczko");
         Set<ConstraintViolation<Author>> violations = validator.validate(author);
 
         if (!violations.isEmpty()) {
@@ -43,5 +46,21 @@ public class ValidationApiController {
                     .collect(Collectors.joining("<br><br>"));
         }
         return "Author validation complete";
+    }
+
+    @GetMapping("/publisher")
+    public String validatePublisher() {
+        Publisher publisher = new Publisher();
+        publisher.setNip("222");
+        publisher.setRegon("tak");
+
+        Set<ConstraintViolation<Publisher>> violations = validator.validate(publisher);
+
+        if (!violations.isEmpty()) {
+            return violations.stream()
+                    .map(v -> v.getPropertyPath().toString().concat(" : ").concat(v.getMessage()))
+                    .collect(Collectors.joining("<br><br>"));
+        }
+        return "Publisher validation complete";
     }
 }
