@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import jakarta.validation.ConstraintViolation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +17,10 @@ import pl.coderslab.entity.Publisher;
 import pl.coderslab.repository.CategoryRepository;
 import pl.coderslab.repository.PublisherRepository;
 
+import jakarta.validation.Validator;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -29,14 +32,35 @@ public class BookController {
     private final BookRepository bookRepository;
     private final CategoryRepository categoryRepository;
     private final PublisherRepository publisherRepository;
+    private final Validator validator;
 
-    public BookController(BookDao bookDao, PublisherDao publisherDao, AuthorDao authorDao, BookRepository bookRepository, CategoryRepository categoryRepository, PublisherRepository publisherRepository) {
+    public BookController(BookDao bookDao, PublisherDao publisherDao, AuthorDao authorDao, BookRepository bookRepository, CategoryRepository categoryRepository, PublisherRepository publisherRepository, Validator validator) {
         this.bookDao = bookDao;
         this.publisherDao = publisherDao;
         this.authorDao = authorDao;
         this.bookRepository = bookRepository;
         this.categoryRepository = categoryRepository;
         this.publisherRepository = publisherRepository;
+        this.validator = validator;
+    }
+
+    @GetMapping("/test/validator")
+    @ResponseBody
+    public String testValidation() {
+        Book book = new Book();
+        book.setTitle("bbb");
+        Set<ConstraintViolation<Book>> constraintViolations = validator.validate(book);
+        StringBuilder sb = new StringBuilder();
+
+        if (!constraintViolations.isEmpty()) {
+            for (ConstraintViolation<Book> violation : constraintViolations) {
+                sb.append(violation.getPropertyPath() + " "
+                        + violation.getMessage()).append("<br>");
+            }
+        } else {
+            return "Validation test complete";
+        }
+        return sb.toString();
     }
 
     @GetMapping("/test")
